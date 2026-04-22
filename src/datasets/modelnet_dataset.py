@@ -39,12 +39,13 @@ class ModelNetDataset(Dataset):
         seed: int = 42,
         allowed_angles: List[int] = [],
         transform=None,
+        splits_file: str = "data/processed/splits.json",
     ):
         self.root = Path(root)
         self.split = split
         self.transform = transform
         self.allowed_angles = allowed_angles
-        self.splits_file: str = "data/processed/splits.json"
+        self.splits_file: str = splits_file
         self.class_to_idx = self._build_class_index()
         self.samples = self._build_samples(split_ratios, seed)
 

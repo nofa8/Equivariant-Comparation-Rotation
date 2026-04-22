@@ -1,0 +1,43 @@
+from torch.utils.data import DataLoader
+from src.datasets.modelnet_dataset import ModelNetDataset
+from src.datasets.transforms import build_transforms
+
+
+TRAIN_ANGLES = [0, 30, 60, 90, 120, 150]
+
+
+def build_dataloaders(config, augment):
+    train_transform = build_transforms(augment=augment)
+    val_transform = build_transforms(augment=False)
+
+    train_set = ModelNetDataset(
+        root=config["data_root"],
+        split="train",
+        splits_file=config["splits_file"],
+        allowed_angles=TRAIN_ANGLES,
+        transform=train_transform,
+    )
+
+    val_set = ModelNetDataset(
+        root=config["data_root"],
+        split="val",
+        splits_file=config["splits_file"],
+        allowed_angles=TRAIN_ANGLES,
+        transform=val_transform,
+    )
+
+    train_loader = DataLoader(
+        train_set,
+        batch_size=config["batch_size"],
+        shuffle=True,
+        num_workers=4,
+    )
+
+    val_loader = DataLoader(
+        val_set,
+        batch_size=config["batch_size"],
+        shuffle=False,
+        num_workers=4,
+    )
+
+    return train_loader, val_loader

@@ -1,0 +1,17 @@
+S-1:
+  model: model_s
+  optimizer: adamw
+  loss: ce
+  augmentation: false
+
+S-3:
+  model: model_s
+  optimizer: adamw
+  loss: ce
+  augmentation: true
+
+T-FT-1:
+  model: model_t
+  optimizer: adamw
+  loss: ce
+  augmentation: false
