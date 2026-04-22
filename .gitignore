@@ -11,3 +11,8 @@ wheels/
 
 *.7z
 *.tar.gz
+
+# ModelNet images
+
+ModelNet10_views
+ModelNet40_views
