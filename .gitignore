@@ -12,7 +12,13 @@ wheels/
 *.7z
 *.tar.gz
 
+# Experiment Outputs (Large files & logs)
+outputs/**/checkpoints/
+outputs/*/logs/
+
 # ModelNet images
 
 ModelNet10_views
 ModelNet40_views
+
+.env

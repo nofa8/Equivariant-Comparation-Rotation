@@ -1,0 +1,8 @@
+model: model_s
+optimizer: adamw
+loss: ce
+augmentation: false
+data_root: data/raw/ModelNet10_views
+splits_file: data/processed/splits.json
+batch_size: 64
+epochs: 30

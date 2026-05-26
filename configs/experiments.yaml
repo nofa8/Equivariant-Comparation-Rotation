@@ -10,8 +10,48 @@ S-3:
   loss: ce
   augmentation: true
 
+T-FE-1:
+  model: model_t
+  optimizer: adamw
+  loss: ce
+  augmentation: false
+  freeze: true
+  pretrained: true
+
+T-FE-2:
+  model: model_t
+  optimizer: adamw
+  loss: ce
+  augmentation: true
+  freeze: true
+  pretrained: true
+
 T-FT-1:
   model: model_t
   optimizer: adamw
   loss: ce
   augmentation: false
+  freeze: false
+  pretrained: true
+  lr: 0.0001
+
+T-FT-2:
+  model: model_t
+  optimizer: adamw
+  loss: ce
+  augmentation: true
+  freeze: false
+  pretrained: true
+  lr: 0.0001
+
+Eq-1:
+  model: model_eq
+  optimizer: adamw
+  loss: ce
+  augmentation: false
+
+Eq-2:
+  model: model_eq
+  optimizer: adamw
+  loss: ce
+  augmentation: true

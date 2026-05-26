@@ -1,7 +1,9 @@
-from torchvision.models import resnet18
+import torch.nn as nn
+from torchvision.models import resnet18, ResNet18_Weights
 
 def get_resnet18(num_classes, pretrained=True, freeze=False):
-    model = resnet18(pretrained=pretrained)
+    weights = ResNet18_Weights.DEFAULT if pretrained else None
+    model = resnet18(weights=weights)
 
     if freeze:
         for p in model.parameters():

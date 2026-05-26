@@ -1,6 +1,8 @@
 import argparse
 import yaml
 import torch
+import os 
+from pathlib import Path
 
 from src.models.factory import build_model
 from src.datasets.factory import build_dataloaders
@@ -53,9 +55,17 @@ def main():
     )
 
     # -------------------------------
-    # Model
-    # -------------------------------
-    model = build_model(config["model"])
+    freeze = config.get("freeze", False)
+    pretrained = config.get("pretrained", True)
+    model = build_model(config["model"], freeze=freeze, pretrained=pretrained)
+
+    # Logging parameter counts for scientific documentation
+    total_params = sum(p.numel() for p in model.parameters())
+    trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    print(f"\n📊 Model Parameter Summary:")
+    print(f"   Total Parameters:     {total_params:,}")
+    print(f"   Trainable Parameters: {trainable_params:,}")
+    print(f"   Frozen Parameters:    {total_params - trainable_params:,}\n")
 
     # -------------------------------
     # Training components
@@ -63,7 +73,16 @@ def main():
     optimizer = build_optimizer(model, config)
     loss_fn = build_loss(config["loss"])
 
-    writer = get_writer(args.exp)
+    # Set up experiment directory
+    exp_dir = Path("outputs") / args.exp
+    exp_dir.mkdir(parents=True, exist_ok=True)
+
+    # Save the configuration used for the experiment
+    with open(exp_dir / "config.yaml", "w") as f:
+        yaml.dump(config, f, default_flow_style=False)
+
+    from torch.utils.tensorboard import SummaryWriter
+    writer = SummaryWriter(exp_dir / "logs")
 
     trainer = Trainer(
         model,
@@ -73,6 +92,7 @@ def main():
         loss_fn,
         device,
         writer,
+        checkpoint_dir=exp_dir / "checkpoints",
     )
 
     # -------------------------------

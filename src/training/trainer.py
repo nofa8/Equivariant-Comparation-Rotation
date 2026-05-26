@@ -1,8 +1,10 @@
 import torch
 from tqdm import tqdm
 
+from pathlib import Path
+
 class Trainer:
-    def __init__(self, model, train_loader, val_loader, optimizer, loss_fn, device, writer=None):
+    def __init__(self, model, train_loader, val_loader, optimizer, loss_fn, device, writer=None, checkpoint_dir="outputs/checkpoints"):
         self.model = model.to(device)
         self.train_loader = train_loader
         self.val_loader = val_loader
@@ -10,6 +12,8 @@ class Trainer:
         self.loss_fn = loss_fn
         self.device = device
         self.writer = writer
+        self.checkpoint_dir = Path(checkpoint_dir)
+        self.checkpoint_dir.mkdir(parents=True, exist_ok=True)
 
     def train_one_epoch(self, epoch):
         self.model.train()
@@ -77,6 +81,10 @@ class Trainer:
 
             if val_acc > best_acc:
                 best_acc = val_acc
-                torch.save(self.model.state_dict(), "outputs/checkpoints/best.pt")
+                torch.save({
+                    "model_state_dict": self.model.state_dict(),
+                    "epoch": epoch,
+                    "best_val_acc": best_acc,
+                }, self.checkpoint_dir / "best.pt")
 
         return best_acc

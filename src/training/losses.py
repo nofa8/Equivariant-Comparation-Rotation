@@ -5,3 +5,5 @@ def build_loss(name):
         return nn.CrossEntropyLoss()
     elif name == "label_smoothing":
         return nn.CrossEntropyLoss(label_smoothing=0.1)
+    else:
+        raise ValueError(f"Unknown loss function: {name}")

@@ -1,0 +1,11 @@
+augmentation: false
+batch_size: 64
+data_root: data/raw/ModelNet10_views
+epochs: 30
+freeze: false
+loss: ce
+lr: 0.0001
+model: model_t
+optimizer: adamw
+pretrained: true
+splits_file: data/processed/splits.json

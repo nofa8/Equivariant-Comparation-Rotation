@@ -44,7 +44,10 @@ class ModelNetDataset(Dataset):
         self.root = Path(root)
         self.split = split
         self.transform = transform
-        self.allowed_angles = allowed_angles
+        if allowed_angles is not None:
+            self.allowed_angles = [a // 30 if a >= 12 else a for a in allowed_angles]
+        else:
+            self.allowed_angles = None
         self.splits_file: str = splits_file
         self.class_to_idx = self._build_class_index()
         self.samples = self._build_samples(split_ratios, seed)

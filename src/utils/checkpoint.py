@@ -6,5 +6,9 @@ def save_checkpoint(model, path):
     torch.save(model.state_dict(), path)
 
 def load_checkpoint(model, path, device="cpu"):
-    model.load_state_dict(torch.load(path, map_location=device))
+    ckpt = torch.load(path, map_location=device)
+    if isinstance(ckpt, dict) and "model_state_dict" in ckpt:
+        model.load_state_dict(ckpt["model_state_dict"])
+    else:
+        model.load_state_dict(ckpt)
     return model
