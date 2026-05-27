@@ -72,7 +72,7 @@ def main():
     # -------------------------------
     # 2. Build Dataset & DataLoader
     # -------------------------------
-    val_transform = build_transforms(img_size=224, augment=False)
+    val_transform = build_transforms(img_size=224, augment=False, normalize=config.get("normalize", False))
     
     # We use all angles [0..11] representing 0° to 330° for full evaluation
     full_eval_angles = list(range(12))

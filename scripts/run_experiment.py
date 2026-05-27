@@ -19,7 +19,7 @@ BASE_CONFIG = {
     "splits_file": "data/processed/splits.json",
     "batch_size": 64,
     "epochs": 30,
-    "patience": 5,
+    "patience": 10,
 }
 
 
