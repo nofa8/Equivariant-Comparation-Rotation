@@ -3,6 +3,11 @@ batch_size: 64
 data_root: data/raw/ModelNet10_views
 epochs: 30
 loss: ce
+lr: 0.01
 model: model_s
+momentum: 0.9
+nesterov: true
 optimizer: sgd
+patience: 10
 splits_file: data/processed/splits.json
+weight_decay: 0.0001

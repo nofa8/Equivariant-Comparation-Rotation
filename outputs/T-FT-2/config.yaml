@@ -6,6 +6,9 @@ freeze: false
 loss: ce
 lr: 0.0001
 model: model_t
+normalize: true
 optimizer: adamw
+patience: 10
 pretrained: true
 splits_file: data/processed/splits.json
+weight_decay: 0.0001

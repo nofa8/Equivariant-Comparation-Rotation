@@ -4,7 +4,11 @@ data_root: data/raw/ModelNet10_views
 epochs: 30
 freeze: true
 loss: ce
+lr: 0.001
 model: model_t
+normalize: true
 optimizer: adamw
+patience: 10
 pretrained: true
 splits_file: data/processed/splits.json
+weight_decay: 0.0001

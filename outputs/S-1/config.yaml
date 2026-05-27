@@ -1,8 +1,11 @@
+augmentation: false
+batch_size: 64
+data_root: data/raw/ModelNet10_views
+epochs: 30
+loss: ce
+lr: 0.001
 model: model_s
 optimizer: adamw
-loss: ce
-augmentation: false
-data_root: data/raw/ModelNet10_views
+patience: 10
 splits_file: data/processed/splits.json
-batch_size: 64
-epochs: 30
+weight_decay: 0.0001
