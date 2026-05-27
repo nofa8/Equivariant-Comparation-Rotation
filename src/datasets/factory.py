@@ -7,8 +7,9 @@ TRAIN_ANGLES = [0, 30, 60, 90, 120, 150]
 
 
 def build_dataloaders(config, augment):
-    train_transform = build_transforms(augment=augment)
-    val_transform = build_transforms(augment=False)
+    normalize = config.get("normalize", False)
+    train_transform = build_transforms(augment=augment, normalize=normalize)
+    val_transform = build_transforms(augment=False, normalize=normalize)
 
     train_set = ModelNetDataset(
         root=config["data_root"],
@@ -26,18 +27,20 @@ def build_dataloaders(config, augment):
         transform=val_transform,
     )
 
+    num_workers = config.get("num_workers", 4)
+
     train_loader = DataLoader(
         train_set,
         batch_size=config["batch_size"],
         shuffle=True,
-        num_workers=4,
+        num_workers=num_workers,
     )
 
     val_loader = DataLoader(
         val_set,
         batch_size=config["batch_size"],
         shuffle=False,
-        num_workers=4,
+        num_workers=num_workers,
     )
 
     return train_loader, val_loader

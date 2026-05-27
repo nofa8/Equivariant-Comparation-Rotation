@@ -9,6 +9,7 @@ from src.datasets.factory import build_dataloaders
 from src.training.trainer import Trainer
 from src.training.losses import build_loss
 from src.training.optimizers import build_optimizer
+from src.training.schedulers import build_scheduler
 from src.utils.seed import set_seed
 from src.utils.logger import get_writer
 
@@ -18,6 +19,7 @@ BASE_CONFIG = {
     "splits_file": "data/processed/splits.json",
     "batch_size": 64,
     "epochs": 30,
+    "patience": 5,
 }
 
 
@@ -59,18 +61,25 @@ def main():
     pretrained = config.get("pretrained", True)
     model = build_model(config["model"], freeze=freeze, pretrained=pretrained)
 
-    # Logging parameter counts for scientific documentation
-    total_params = sum(p.numel() for p in model.parameters())
-    trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    print(f"\n📊 Model Parameter Summary:")
-    print(f"   Total Parameters:     {total_params:,}")
-    print(f"   Trainable Parameters: {trainable_params:,}")
-    print(f"   Frozen Parameters:    {total_params - trainable_params:,}\n")
+    # -------------------------------
+    # Computational & Structural Profiling
+    # -------------------------------
+    from src.utils.profiler import profile_model_efficiency
+    stats = profile_model_efficiency(model)
+    print(f"\n📊 Model Computational & Structural Profiling Summary:")
+    print(f"   Total Parameters:      {stats['total_params']:,}")
+    print(f"   Trainable Parameters:  {stats['trainable_params']:,}")
+    print(f"   Frozen Parameters:     {stats['total_params'] - stats['trainable_params']:,}")
+    if stats['flops'] > 0:
+        print(f"   Estimated Complexity:  {stats['flops']:,} MACs (FLOPs)\n")
+    else:
+        print(f"   Estimated Complexity:  N/A (Fallback mode)\n")
 
     # -------------------------------
     # Training components
     # -------------------------------
     optimizer = build_optimizer(model, config)
+    scheduler = build_scheduler(optimizer, config)
     loss_fn = build_loss(config["loss"])
 
     # Set up experiment directory
@@ -93,6 +102,8 @@ def main():
         device,
         writer,
         checkpoint_dir=exp_dir / "checkpoints",
+        scheduler=scheduler,
+        patience=config.get("patience"),
     )
 
     # -------------------------------

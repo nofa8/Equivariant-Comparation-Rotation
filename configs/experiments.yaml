@@ -1,57 +1,93 @@
 S-1:
   model: model_s
   optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
+  loss: ce
+  augmentation: false
+
+S-2:
+  model: model_s
+  optimizer: sgd
+  lr: 0.01
+  momentum: 0.9
+  nesterov: true
+  weight_decay: 0.0001
   loss: ce
   augmentation: false
 
 S-3:
   model: model_s
   optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
   loss: ce
   augmentation: true
+
+S-4:
+  model: model_s
+  optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
+  loss: label_smoothing
+  augmentation: false
 
 T-FE-1:
   model: model_t
   optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
   loss: ce
   augmentation: false
   freeze: true
   pretrained: true
+  normalize: true
 
 T-FE-2:
   model: model_t
   optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
   loss: ce
   augmentation: true
   freeze: true
   pretrained: true
+  normalize: true
 
 T-FT-1:
   model: model_t
   optimizer: adamw
+  lr: 0.0001
+  weight_decay: 0.0001
   loss: ce
   augmentation: false
   freeze: false
   pretrained: true
-  lr: 0.0001
+  normalize: true
 
 T-FT-2:
   model: model_t
   optimizer: adamw
+  lr: 0.0001
+  weight_decay: 0.0001
   loss: ce
   augmentation: true
   freeze: false
   pretrained: true
-  lr: 0.0001
+  normalize: true
 
 Eq-1:
   model: model_eq
   optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
   loss: ce
   augmentation: false
 
 Eq-2:
   model: model_eq
   optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
   loss: ce
   augmentation: true

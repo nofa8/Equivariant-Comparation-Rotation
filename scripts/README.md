@@ -50,8 +50,16 @@ Mathematical verification that the C8-equivariant model satisfies the equivarian
 
 Verifies that train/test splits have zero model-level overlap (no data leakage).
 
-## Notebook Support
+## Feature Extraction & Packaging
 
-### `update_notebook.py`
+### `extract_features.py`
 
-Programmatically updates specific cells in the Jupyter notebook to match the latest experiment list.
+Loads a trained ResNet-18 model, strips its classification head, extracts 512-dimensional latent feature representations for the test set, and saves them in both PyTorch `.pt` and NumPy `.npy` formats.
+
+```bash
+PYTHONPATH=. uv run python scripts/extract_features.py --ckpt outputs/T-FT-2/checkpoints/best.pt --split test
+```
+
+### `generate_notebook.py`
+
+Programmatically constructs the master scientific report notebook `Final_Report.ipynb` with all markdown annotations, regulatory compliance statements, and executable cells.

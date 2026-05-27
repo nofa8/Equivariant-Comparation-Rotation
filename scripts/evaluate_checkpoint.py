@@ -57,8 +57,7 @@ def main():
     num_classes = config.get("num_classes", 10)
     model = build_model(config["model"], num_classes=num_classes)
     
-    # Check if checkpoint contains rich metadata
-    ckpt = torch.load(ckpt_path, map_location=device)
+    ckpt = torch.load(ckpt_path, map_location=device, weights_only=True)
     if isinstance(ckpt, dict) and "model_state_dict" in ckpt:
         print(f"📈 Loaded Rich Checkpoint Metadata | Best Val Accuracy: {ckpt.get('best_val_acc', 0.0):.4f} | Saved at Epoch: {ckpt.get('epoch', 0)}")
         model.load_state_dict(ckpt["model_state_dict"])

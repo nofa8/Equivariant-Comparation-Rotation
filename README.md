@@ -16,31 +16,35 @@ A comparative study of three deep learning approaches to rotation-robust image c
 
 ## Experiment Matrix
 
-| Experiment | Model | Strategy | Augmentation | LR |
-|-----------|-------|----------|-------------|-----|
-| S-1 | Model S | From scratch | ❌ | 1e-3 |
-| S-3 | Model S | From scratch | ✅ | 1e-3 |
-| T-FE-1 | ResNet-18 | Feature extraction (frozen backbone) | ❌ | 1e-3 |
-| T-FE-2 | ResNet-18 | Feature extraction (frozen backbone) | ✅ | 1e-3 |
-| T-FT-1 | ResNet-18 | Fine-tuning (full model) | ❌ | 1e-4 |
-| T-FT-2 | ResNet-18 | Fine-tuning (full model) | ✅ | 1e-4 |
-| Eq-1 | Equivariant CNN | C8-equivariant layers | ❌ | 1e-3 |
-| Eq-2 | Equivariant CNN | C8-equivariant layers | ✅ | 1e-3 |
+| Experiment | Model | Strategy | Augmentation | Optimizer | Loss | LR |
+|-----------|-------|----------|-------------|-----------|------|-----|
+| S-1 | Model S | From scratch | ❌ | AdamW | CrossEntropy | 1e-3 |
+| **S-2** | **Model S** | **From scratch** | **❌** | **SGD** | **CrossEntropy** | **1e-3** |
+| S-3 | Model S | From scratch | ✅ | AdamW | CrossEntropy | 1e-3 |
+| **S-4** | **Model S** | **From scratch** | **❌** | **AdamW** | **LabelSmoothing** | **1e-3** |
+| T-FE-1 | ResNet-18 | Feature extraction (frozen backbone) | ❌ | AdamW | CrossEntropy | 1e-3 |
+| T-FE-2 | ResNet-18 | Feature extraction (frozen backbone) | ✅ | AdamW | CrossEntropy | 1e-3 |
+| T-FT-1 | ResNet-18 | Fine-tuning (full model) | ❌ | AdamW | CrossEntropy | 1e-4 |
+| T-FT-2 | ResNet-18 | Fine-tuning (full model) | ✅ | AdamW | CrossEntropy | 1e-4 |
+| Eq-1 | Equivariant CNN | C8-equivariant layers | ❌ | AdamW | CrossEntropy | 1e-3 |
+| Eq-2 | Equivariant CNN | C8-equivariant layers | ✅ | AdamW | CrossEntropy | 1e-3 |
 
 ## Key Results
 
-| Model | Overall Accuracy | Macro F1 | Rotation AUC |
-|-------|-----------------|----------|-------------|
-| S-1 | 0.4620 | 0.3650 | 0.4277 |
-| S-3 | 0.8846 | 0.8349 | 0.8831 |
-| T-FE-1 | 0.8673 | 0.8208 | 0.8661 |
-| T-FE-2 | 0.8325 | 0.7705 | 0.8326 |
-| T-FT-1 | 0.9128 | 0.8841 | 0.9109 |
-| **T-FT-2** | **0.9258** | **0.8939** | **0.9253** |
-| Eq-1 | 0.7954 | 0.7455 | 0.7941 |
-| Eq-2 | 0.7907 | 0.7126 | 0.7905 |
+| Model | Overall Accuracy | Macro F1 | Rotation AUC | 180° Drop (D) |
+|-------|-----------------|----------|-------------|---------------|
+| S-1 | 0.4620 | 0.3650 | 0.4277 | 62.3% |
+| **S-2 (SGD)** | **0.8085** | **0.7647** | **0.8057** | **19.4%** |
+| S-3 | 0.8846 | 0.8349 | 0.8831 | 8.4% |
+| **S-4 (LS)** | **0.8460** | **0.8037** | **0.8415** | **21.5%** |
+| T-FE-1 | 0.8673 | 0.8208 | 0.8661 | 19.8% |
+| T-FE-2 | 0.8325 | 0.7705 | 0.8326 | 10.4% |
+| T-FT-1 | 0.9128 | 0.8841 | 0.9109 | 9.6% |
+| **T-FT-2** | **0.9258** | **0.8939** | **0.9253** | **7.1%** |
+| Eq-1 | 0.7954 | 0.7455 | 0.7941 | 25.2% |
+| Eq-2 | 0.7907 | 0.7126 | 0.7905 | 21.6% |
 
-**Rotation AUC** is a normalized area-under-the-curve metric computed over per-angle accuracy across all 12 viewpoints (0°–330°). A score of 1.0 means perfect accuracy at every angle; a low score indicates view-dependent performance.
+**Rotation AUC** is a normalized area-under-the-curve metric computed over per-angle accuracy across all 12 viewpoints (0°–330°). A score of 1.0 means perfect accuracy at every angle; a low score indicates view-dependent performance. **180° Drop (D)** measures the accuracy delta between the best trained view (0°) and its diametrically opposed out-of-distribution view (180°).
 
 ## Project Structure
 
@@ -61,11 +65,17 @@ DL_Project/
 │   ├── run_experiment.py       # Main training entry point
 │   ├── evaluate_checkpoint.py  # Full evaluation pipeline
 │   ├── generate_comparison.py  # Cross-experiment comparative analysis
+│   ├── extract_features.py     # 512D latent features extractor
+│   ├── generate_notebook.py    # Master notebook programmatic builder
 │   ├── verify_equivariance.py  # Mathematical equivariance verification
 │   ├── check_data.py           # Data leakage verification
 │   └── train.py                # Quick prototyping script (CIFAR-10)
 ├── notebooks/                  # Jupyter notebooks for interactive runs
+│   └── run_all_experiments.ipynb
 ├── outputs/                    # Experiment outputs (checkpoints, logs, figures)
+├── Final_Report.ipynb          # Master fully-executed scientific notebook
+├── Final_Report_Clean.ipynb    # "Clean" notebook copy (markdown stripped, unexecuted)
+├── Final_Report.html           # HTML export of the executed report
 ├── main.py                     # Scaffolding entry point (dev only)
 └── pyproject.toml              # Project dependencies (managed by uv)
 ```
