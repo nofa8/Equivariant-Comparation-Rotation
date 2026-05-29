@@ -19,7 +19,7 @@ A comparative study of three deep learning approaches to rotation-robust image c
 | Experiment | Model | Strategy | Augmentation | Optimizer | Loss | LR |
 |-----------|-------|----------|-------------|-----------|------|-----|
 | S-1 | Model S | From scratch | ❌ | AdamW | CrossEntropy | 1e-3 |
-| **S-2** | **Model S** | **From scratch** | **❌** | **SGD** | **CrossEntropy** | **1e-3** |
+| **S-2** | **Model S** | **From scratch** | **❌** | **SGD** | **CrossEntropy** | **1e-2** |
 | S-3 | Model S | From scratch | ✅ | AdamW | CrossEntropy | 1e-3 |
 | **S-4** | **Model S** | **From scratch** | **❌** | **AdamW** | **LabelSmoothing** | **1e-3** |
 | T-FE-1 | ResNet-18 | Feature extraction (frozen backbone) | ❌ | AdamW | CrossEntropy | 1e-3 |
@@ -33,16 +33,16 @@ A comparative study of three deep learning approaches to rotation-robust image c
 
 | Model | Overall Accuracy | Macro F1 | Rotation AUC | 180° Drop (D) |
 |-------|-----------------|----------|-------------|---------------|
-| S-1 | 0.4620 | 0.3650 | 0.4277 | 62.3% |
-| **S-2 (SGD)** | **0.8085** | **0.7647** | **0.8057** | **19.4%** |
-| S-3 | 0.8846 | 0.8349 | 0.8831 | 8.4% |
-| **S-4 (LS)** | **0.8460** | **0.8037** | **0.8415** | **21.5%** |
-| T-FE-1 | 0.8673 | 0.8208 | 0.8661 | 19.8% |
-| T-FE-2 | 0.8325 | 0.7705 | 0.8326 | 10.4% |
-| T-FT-1 | 0.9128 | 0.8841 | 0.9109 | 9.6% |
-| **T-FT-2** | **0.9258** | **0.8939** | **0.9253** | **7.1%** |
-| Eq-1 | 0.7954 | 0.7455 | 0.7941 | 25.2% |
-| Eq-2 | 0.7907 | 0.7126 | 0.7905 | 21.6% |
+| S-1 | 0.8289 | 0.7887 | 0.8248 | 23.8% |
+| **S-2 (SGD)** | **0.7728** | **0.7306** | **0.7706** | **22.8%** |
+| S-3 | 0.8838 | 0.8347 | 0.8831 | 8.0% |
+| **S-4 (LS)** | **0.8225** | **0.7812** | **0.8183** | **18.6%** |
+| T-FE-1 | 0.8596 | 0.8212 | 0.8586 | 18.4% |
+| T-FE-2 | 0.8374 | 0.7861 | 0.8372 | 12.6% |
+| T-FT-1 | 0.8886 | 0.8494 | 0.8880 | 9.8% |
+| **T-FT-2** | **0.9116** | **0.8757** | **0.9112** | **6.5%** |
+| Eq-1 | 0.7956 | 0.7490 | 0.7942 | 26.3% |
+| Eq-2 | 0.7894 | 0.7140 | 0.7898 | 20.9% |
 
 **Rotation AUC** is a normalized area-under-the-curve metric computed over per-angle accuracy across all 12 viewpoints (0°–330°). A score of 1.0 means perfect accuracy at every angle; a low score indicates view-dependent performance. **180° Drop (D)** measures the accuracy delta between the best trained view (0°) and its diametrically opposed out-of-distribution view (180°).
 
