@@ -17,6 +17,15 @@ def build_optimizer(model, config):
             nesterov=nesterov, 
             weight_decay=weight_decay
         )
+    elif opt_type == "adam":
+        lr = config.get("lr", 1e-3)
+        weight_decay = config.get("weight_decay", 1e-4)
+        
+        opt = optim.Adam(
+            trainable_params, 
+            lr=lr, 
+            weight_decay=weight_decay
+        )
     else:  # default to AdamW
         lr = config.get("lr", 1e-3)
         weight_decay = config.get("weight_decay", 0.01)

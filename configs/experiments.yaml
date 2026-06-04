@@ -1,3 +1,6 @@
+# ============================================================
+# Baseline Experiments
+# ============================================================
 S-1:
   model: model_s
   optimizer: adamw
@@ -91,3 +94,104 @@ Eq-2:
   weight_decay: 0.0001
   loss: ce
   augmentation: true
+
+# ============================================================
+# Design Decision Studies — Hyperparameter Screening (5 epochs)
+# ============================================================
+
+OPT-SGD:
+  model: model_eq
+  optimizer: sgd
+  lr: 0.01
+  momentum: 0.9
+  weight_decay: 0.0001
+  loss: ce
+  augmentation: false
+  epochs: 5
+
+OPT-Adam:
+  model: model_eq
+  optimizer: adam
+  lr: 0.001
+  weight_decay: 0.0001
+  loss: ce
+  augmentation: false
+  epochs: 5
+
+OPT-AdamW:
+  model: model_eq
+  optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
+  loss: ce
+  augmentation: false
+  epochs: 5
+
+LOSS-LS:
+  model: model_eq
+  optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
+  loss: label_smoothing
+  augmentation: false
+  epochs: 5
+
+# ============================================================
+# Architecture Capacity Study (Full Training)
+# ============================================================
+
+ARCH-Medium:
+  model: model_eq_medium
+  optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
+  loss: ce
+  augmentation: false
+
+ARCH-Large:
+  model: model_eq_large
+  optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
+  loss: ce
+  augmentation: false
+
+ARCH-Large-Deep:
+  model: model_eq_large_deep
+  optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
+  loss: ce
+  augmentation: false
+
+# ============================================================
+# Group Order Study (Full Training)
+# ============================================================
+
+GROUP-C4:
+  model: model_eq_c4
+  optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
+  loss: ce
+  augmentation: false
+
+GROUP-C16:
+  model: model_eq_c16
+  optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
+  loss: ce
+  augmentation: false
+
+# ============================================================
+# Ablation: GroupPooling Removal (Full Training)
+# ============================================================
+
+NO-GPOOL:
+  model: model_eq_no_gpool
+  optimizer: adamw
+  lr: 0.001
+  weight_decay: 0.0001
+  loss: ce
+  augmentation: false
