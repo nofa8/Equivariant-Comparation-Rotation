@@ -1,0 +1,6 @@
+{
+    "experiment": "ARCH-Medium",
+    "overall_accuracy": 0.8872180451127819,
+    "overall_loss": 0.3559130652271801,
+    "macro_f1": 0.8439182148938684
+}

@@ -1,0 +1,6 @@
+{
+    "experiment": "NO-GPOOL",
+    "overall_accuracy": 0.9104905119942714,
+    "overall_loss": 0.25897109795813916,
+    "macro_f1": 0.8734101205188717
+}

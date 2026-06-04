@@ -1,0 +1,6 @@
+{
+    "experiment": "ARCH-Large",
+    "overall_accuracy": 0.8915145005370569,
+    "overall_loss": 0.31529045438962816,
+    "macro_f1": 0.8492837737397094
+}
