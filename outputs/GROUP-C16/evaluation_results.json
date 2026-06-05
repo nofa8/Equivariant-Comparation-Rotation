@@ -1,0 +1,6 @@
+{
+    "experiment": "GROUP-C16",
+    "overall_accuracy": 0.8976011457214464,
+    "overall_loss": 0.30461431544099365,
+    "macro_f1": 0.8599851635764612
+}
