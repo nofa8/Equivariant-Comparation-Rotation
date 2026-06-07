@@ -28,6 +28,16 @@ A comparative study of three deep learning approaches to rotation-robust image c
 | T-FT-2 | ResNet-18 | Fine-tuning (full model) | ✅ | AdamW | CrossEntropy | 1e-4 |
 | Eq-1 | Equivariant CNN | C8-equivariant layers | ❌ | AdamW | CrossEntropy | 1e-3 |
 | Eq-2 | Equivariant CNN | C8-equivariant layers | ✅ | AdamW | CrossEntropy | 1e-3 |
+| OPT-SGD | Equivariant CNN | Hyperparam Screen (5ep) | ❌ | SGD | CrossEntropy | 1e-2 |
+| OPT-Adam | Equivariant CNN | Hyperparam Screen (5ep) | ❌ | Adam | CrossEntropy | 1e-3 |
+| OPT-AdamW | Equivariant CNN | Hyperparam Screen (5ep) | ❌ | AdamW | CrossEntropy | 1e-3 |
+| LOSS-LS | Equivariant CNN | Hyperparam Screen (5ep) | ❌ | AdamW | LabelSmoothing | 1e-3 |
+| ARCH-Medium | Medium Eq CNN | Arch Capacity Study | ❌ | AdamW | CrossEntropy | 1e-3 |
+| ARCH-Large | Large Eq CNN | Arch Capacity Study | ❌ | AdamW | CrossEntropy | 1e-3 |
+| ARCH-Large-Deep | Large-Deep Eq CNN | Arch Capacity Study | ❌ | AdamW | CrossEntropy | 1e-3 |
+| GROUP-C4 | Equivariant CNN | Group Order C4 | ❌ | AdamW | CrossEntropy | 1e-3 |
+| GROUP-C16 | Equivariant CNN | Group Order C16 | ❌ | AdamW | CrossEntropy | 1e-3 |
+| NO-GPOOL | Equivariant CNN | Ablation (No GPool) | ❌ | AdamW | CrossEntropy | 1e-3 |
 
 ## Key Results
 
@@ -43,6 +53,12 @@ A comparative study of three deep learning approaches to rotation-robust image c
 | **T-FT-2** | **0.9116** | **0.8757** | **0.9112** | **6.5%** |
 | Eq-1 | 0.7956 | 0.7490 | 0.7942 | 26.3% |
 | Eq-2 | 0.7894 | 0.7140 | 0.7898 | 20.9% |
+| ARCH-Medium | 0.8872 | 0.8439 | - | - |
+| ARCH-Large | 0.8915 | 0.8493 | - | - |
+| ARCH-Large-Deep | 0.9108 | 0.8802 | - | - |
+| GROUP-C4 | 0.8695 | 0.8169 | - | - |
+| GROUP-C16 | 0.8976 | 0.8600 | - | - |
+| NO-GPOOL | 0.9105 | 0.8734 | - | - |
 
 **Rotation AUC** is a normalized area-under-the-curve metric computed over per-angle accuracy across all 12 viewpoints (0°–330°). A score of 1.0 means perfect accuracy at every angle; a low score indicates view-dependent performance. **180° Drop (D)** measures the accuracy delta between the best trained view (0°) and its diametrically opposed out-of-distribution view (180°).
 
@@ -71,7 +87,11 @@ DL_Project/
 │   ├── check_data.py           # Data leakage verification
 │   └── train.py                # Quick prototyping script (CIFAR-10)
 ├── notebooks/                  # Jupyter notebooks for interactive runs
-│   └── run_all_experiments.ipynb
+│   ├── run_all_experiments.ipynb
+│   ├── hyperparameter_selection.ipynb
+│   ├── group_order_exploration.ipynb
+│   ├── equivariant_architecture_exploration.ipynb
+│   └── understanding_e2cnn.ipynb
 ├── outputs/                    # Experiment outputs (checkpoints, logs, figures)
 ├── Final_Report.ipynb          # Master fully-executed scientific notebook
 ├── Final_Report_Clean.ipynb    # "Clean" notebook copy (markdown stripped, unexecuted)
