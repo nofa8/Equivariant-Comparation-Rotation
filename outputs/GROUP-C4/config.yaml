@@ -1,0 +1,11 @@
+augmentation: false
+batch_size: 64
+data_root: data/raw/ModelNet10_views
+epochs: 30
+loss: ce
+lr: 0.001
+model: model_eq_c4
+optimizer: adamw
+patience: 10
+splits_file: data/processed/splits.json
+weight_decay: 0.0001
