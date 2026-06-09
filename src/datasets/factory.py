@@ -2,11 +2,12 @@ from torch.utils.data import DataLoader
 from src.datasets.modelnet_dataset import ModelNetDataset
 from src.datasets.transforms import build_transforms
 
-
+# This are the predefined training angles
 TRAIN_ANGLES = [0, 30, 60, 90, 120, 150]
 
 
 def build_dataloaders(config, augment):
+    # Normalization is based on the values of the ImageNet dataset, used for pre-trained models
     normalize = config.get("normalize", False)
     train_transform = build_transforms(augment=augment, normalize=normalize)
     val_transform = build_transforms(augment=False, normalize=normalize)
@@ -27,6 +28,8 @@ def build_dataloaders(config, augment):
         transform=val_transform,
     )
 
+
+    # This is where the number of workers for the dataloader is set, it is used to speed up the loading of the data
     num_workers = config.get("num_workers", 4)
 
     train_loader = DataLoader(

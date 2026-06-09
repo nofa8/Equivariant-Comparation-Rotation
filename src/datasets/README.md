@@ -24,7 +24,3 @@ Provides `build_transforms(img_size, augment)`:
 ### `factory.py` — DataLoader Factory
 
 `build_dataloaders(config, augment)` constructs train and validation DataLoaders with the canonical training angles (0°, 30°, 60°, 90°, 120°, 150°).
-
-### `dummy_dataset.py`
-
-Synthetic dataset of random tensors for pipeline testing without real data.

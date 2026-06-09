@@ -33,6 +33,3 @@ Used in experiments: **Eq-1**, **Eq-2**.
 
 `factory.py` provides `build_model(name, ...)` which maps experiment config strings (`model_s`, `model_t`, `model_eq`) to instantiated models.
 
-## Notes
-
-- `cnn.py` contains `SimpleCNN`, an early prototype identical to `ModelS`. It is unused and kept for reference.

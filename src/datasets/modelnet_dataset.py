@@ -144,6 +144,11 @@ class ModelNetDataset(Dataset):
         return len(self.samples)
 
     def __getitem__(self, idx):
+        # this is a sample of the data returned by the dataloader
+        # idx is the index of the sample
+        # img_path is the path to the image
+        # label is the label of the image
+        # angle is the angle of the image
         img_path, label, _ = self.samples[idx]
 
         img = Image.open(img_path).convert("RGB")
